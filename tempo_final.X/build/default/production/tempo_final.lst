@@ -1,0 +1,1738 @@
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;----------------------------------------------------
+                      00002     ;UNIVERSIDAD PEDAGOGICA Y TECNOLOGICA DE COLOMBIA
+                      00003     ;ESCUELA DE INGENIERIA ELECTRONICA
+                      00004     ;MICROCONTROLADORES PRIMER SEMESTRE 2017
+                      00005     ;LABORATORIO #2 TEMPRIZADOR Y VISION ESTREBOSCOPICA
+                      00006     ;FABIAN STEVEN ZEA GONZALEZ
+                      00007     ;201210733
+                      00008     ;JHONATAN REINALDO GOMEZ PESCA
+                      00009     ;201210146
+Warning[205]: Found directive in column 1. (lIST)
+                      00010 lIST p=16f887
+                      00011 #include "p16f887.inc"
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Dec 08 2015
+                      00005 ;  MPASM PIC16F887 processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2015 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00810         LIST
+                      00012 
+                      00013 
+                      00014 ; CONFIG1
+                      00015 ; __config 0xEFF2
+2007   2FF2           00016  __CONFIG _CONFIG1, _FOSC_HS & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_ON & _IE
+                            SO_ON & _FCMEN_ON & _LVP_OFF 
+                      00017 ; CONFIG2
+                      00018 ; __config 0xFFFF
+2008   3FFF           00019  __CONFIG _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
+                      00020 
+Warning[205]: Found directive in column 1. (CBLOCK)
+                      00021 CBLOCK 0X20
+  00000020            00022  VENTANASEG
+  00000021            00023  VENTANAMIN
+  00000022            00024  VENTANAHOR
+                      00025 
+                      00026     
+Warning[205]: Found directive in column 1. (ENDC)
+                      00027 ENDC
+Warning[205]: Found directive in column 1. (CBLOCK)
+                      00028 CBLOCK 0X27
+  00000027            00029     ENTRADASEG
+  00000028            00030     ENTRADAMIN
+  00000029            00031     ENTRADAHOR
+  0000002A            00032     SALIDAASEG
+  0000002B            00033     SALIDABSEG
+  0000002C            00034     SALIDAAMIN
+  0000002D            00035     SALIDABMIN
+  0000002E            00036     SALIDAAHOR
+  0000002F            00037     SALIDABHOR
+  00000030            00038     CONTEO
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000031            00039     CONTEO2
+  00000032            00040     REGOP
+  00000033            00041     CONTA1
+  00000034            00042     CONTA2
+  00000035            00043     REG1
+  00000036            00044     REG2
+  00000037            00045     REG3
+  00000038            00046     REG4
+  00000039            00047     REG5
+  0000003A            00048     REG6
+                      00049     
+Warning[205]: Found directive in column 1. (ENDC)
+                      00050 ENDC   
+Warning[205]: Found directive in column 1. (ORG)
+                      00051 ORG 0X00
+                      00052 ;--------------------------------------
+                      00053     ;PROGRAMA PRINCIPAL
+                      00054 ;--------------------------------------
+0000                  00055 INICIO:
+0000   2???           00056     CALL CONFIGURACION 
+0001   2???           00057     CALL INIG_REG
+0002                  00058 START:
+0002   1C89           00059     BTFSS PORTE,RE1
+0003   2???           00060     GOTO START
+                      00061 
+                      00062     
+0004   2???           00063     CALL CONTADORDEC
+0005   2???           00064     CALL CONTADORINC
+0006   2???           00065     CALL PUBLIC
+0007   2???           00066     CALL ESPERA
+                      00067     
+0008   2???           00068     GOTO START
+                      00069     
+                      00070     #INCLUDE "TABLA.INC"
+                      00001 ;--------------------------------
+                      00002     ;TABLA DE CONVERSION DE BCD A 7 SEGMENTOS
+                      00003 ;----------------------------------------
+0009                  00004 TABLA:
+0009   0782           00005     ADDWF  PCL,1
+000A   347E           00006     RETLW  0X7E
+000B   3430           00007     RETLW  0X30
+000C   346D           00008     RETLW  0X6D
+000D   3479           00009     RETLW  0X79
+000E   3433           00010     RETLW  0X33
+000F   345B           00011     RETLW  0X5B
+0010   341F           00012     RETLW  0X1F
+0011   3470           00013     RETLW  0X70
+0012   347F           00014     RETLW  0X7F
+0013   347B           00015     RETLW  0X7B
+                      00016 
+                      00071     #INCLUDE"MENSAJE_1.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;TABLA DEL MENSAJE 1 "FABIAN_STEVEN_ZEA_GONZALEZ_123"
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00003 ;----------------------------------------------------------
+0014                  00004 MENSAJE_1:
+0014   0782           00005     ADDWF  PCL,F
+0015   3447 3477 341F 00006     DT     0X47, 0X77, 0X1F, 0X30, 0X77, 0X15, 0X08, 0X5B, 0X70, 0X4F
+       3430 3477 3415 
+       3408 345B 3470 
+       344F 
+001F   343E 344F 3415 00007     DT     0X3E, 0X4F, 0X15, 0X08, 0X6D, 0X4F, 0X77, 0X08, 0X5F, 0X7E
+       3408 346D 344F 
+       3477 3408 345F 
+       347E 
+0029   3415 346D 3477 00008     DT     0X15, 0X6D, 0X77, 0X0E, 0X4F, 0X6D, 0X08, 0X30, 0X6D, 0X79
+       340E 344F 346D 
+       3408 3430 346D 
+       3479 
+0033   3400 3400 3400 00009     DT     0X00, 0X00, 0X00, 0X00
+       3400 
+                      00072     #INCLUDE"MENSAJE_2.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;TABLA DEL MENSAJE 2 "JHONATAN_REINALDO_GOMEZ_PESCA"
+                      00003 ;----------------------------------------------------------
+0037                  00004 MENSAJE_2:
+0037   0782           00005     ADDWF  PCL,F
+0038   343C 3437 347E 00006     DT     0X3C, 0X37, 0X7E, 0X15, 0X77, 0X70, 0X77, 0X15, 0X08, 0X05
+       3415 3477 3470 
+       3477 3415 3408 
+       3405 
+0042   344F 3430 3415 00007     DT     0X4F, 0X30, 0X15, 0X77, 0X0E, 0X3D, 0X7E, 0X08, 0X5F, 0X7E
+       3477 340E 343D 
+       347E 3408 345F 
+       347E 
+004C   3415 3415 344F 00008     DT     0X15, 0X15, 0X4F, 0X6D, 0X08, 0X67, 0X4F, 0X5B, 0X4E, 0X77
+       346D 3408 3467 
+       344F 345B 344E 
+       3477 
+0056   3400 3400 3400 00009     DT     0X00, 0X00, 0X00, 0X00
+       3400 
+                      00010 
+                      00073     #INCLUDE"MENSAJE_3.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;TABLA DEL MENSAJE 3 "ESCUELA_INGENIERIA_ELECTRONICA"
+                      00003 ;----------------------------------------------------------
+005A                  00004 MENSAJE_3:
+005A   0782           00005     ADDWF  PCL,F
+005B   344F 345B 344E 00006     DT     0X4F, 0X5B, 0X4E, 0X3E, 0X4F, 0X0E, 0X77, 0X08, 0X30, 0X15
+       343E 344F 340E 
+       3477 3408 3430 
+       3415 
+0065   345F 344F 3415 00007     DT     0X5F, 0X4F, 0X15, 0X30, 0X4F, 0X05, 0X30, 0X77, 0X08, 0X4F
+       3430 344F 3405 
+       3430 3477 3408 
+       344F 
+006F   340E 344F 344E 00008     DT     0X0E, 0X4F, 0X4E, 0X70, 0X05, 0X7E, 0X15, 0X30, 0X4E, 0X77
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+       3470 3405 347E 
+       3415 3430 344E 
+       3477 
+0079   3400 3400 3400 00009     DT     0X00, 0X00, 0X00, 0X00
+       3400 
+                      00010 
+                      00011 
+                      00012 
+                      00013 
+                      00014 
+                      00074     #INCLUDE"MENSAJE_4.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;TABLA DEL MENSAJE 4 "CURSO_MICROCONTROLADORES_49-0"
+                      00003 ;----------------------------------------------------------
+007D                  00004 MENSAJE_4:
+007D   0782           00005     ADDWF  PCL,F
+007E   344E 343E 3405 00006     DT     0X4E, 0X3E, 0X05, 0X5B, 0X7E, 0X08, 0X15, 0X15, 0X30, 0X4E
+       345B 347E 3408 
+       3415 3415 3430 
+       344E 
+0088   3405 347E 344E 00007     DT     0X05, 0X7E, 0X4E, 0X7E, 0X15, 0X70, 0X05, 0X7E, 0X0E, 0X77
+       347E 3415 3470 
+       3405 347E 340E 
+       3477 
+0092   343D 347E 3405 00008     DT     0X3D, 0X7E, 0X05, 0X4F, 0X5B, 0X08, 0X33, 0X7B, 0X01, 0X7E
+       344F 345B 3408 
+       3433 347B 3401 
+       347E 
+009C   3400 3400 3400 00009     DT     0X00, 0X00, 0X00
+                      00010 
+                      00075     #INCLUDE"MENSAJE_5.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;TABLA DEL MENSAJE 5 "PRIMER_SEMESTRE_AÑO_2017_ABC"
+                      00003 ;----------------------------------------------------------
+009F                  00004 MENSAJE_5:
+009F   0782           00005     ADDWF  PCL,F
+00A0   3467 3405 3430 00006     DT     0X67, 0X05, 0X30, 0X15, 0X15, 0X4F, 0X05, 0X08, 0X5B, 0X4F
+       3415 3415 344F 
+       3405 3408 345B 
+       344F 
+00AA   3415 3415 344F 00007     DT     0X15, 0X15, 0X4F, 0X5B, 0X70, 0X05, 0X4F, 0X08, 0X77, 0X55
+       345B 3470 3405 
+       344F 3408 3477 
+       3455 
+00B4   347E 3408 346D 00008     DT     0X7E, 0X08, 0X6D, 0X7E, 0X30, 0X70, 0X08, 0X77, 0X1F, 0X4E
+       347E 3430 3470 
+       3408 3477 341F 
+       344E 
+00BE   3400 3400 3400 00009     DT     0X00, 0X00, 0X00, 0X00
+       3400 
+                      00010 
+                      00011 
+                      00076     #INCLUDE "TABLAESPERA.INC"
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------
+                      00002     ;TABLA DEL MENSAJE PARA LA RUTINA DE ESPERA
+                      00003 ;----------------------------------------
+00C2                  00004 TABLAESPERA:
+00C2   0782           00005     ADDWF  PCL,F
+00C3   3477 3405 344F 00006     DT     0X77, 0X05, 0X4F, 0X67, 0X5B, 0X4F
+       3467 345B 344F 
+                      00007    
+                      00008 
+                      00009 
+                      00077     #INCLUDE "CONFIGURACION.INC"
+                      00001 ;--------------------------------------
+                      00002     ;CONFIGURACION DE PUERTOS
+                      00003 ;--------------------------------------
+00C9                  00004 CONFIGURACION:
+00C9   1683 1303      00005     BANKSEL  OSCCON 
+00CB   3071           00006     MOVLW    B'01110001'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00CC   008F           00007     MOVWF OSCCON
+                      00008 
+00CD   1683 1303      00009     BANKSEL  TRISD
+00CF   30FF           00010     MOVLW    0XFF
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00D0   0085           00011     MOVWF    TRISA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00D1   0188           00012     CLRF     TRISD
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00D2   0187           00013     CLRF     TRISC
+00D3   300E           00014     MOVLW    0X0E
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00D4   0089           00015     MOVWF    TRISE
+00D5   1683 1703      00016     BANKSEL  ANSEL
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+00D7   0188           00017     CLRF     ANSEL
+                      00018 
+00D8   1283 1303      00019     BANKSEL  PORTD
+00DA   0185           00020     CLRF     PORTA
+00DB   0187           00021     CLRF     PORTC
+00DC   0188           00022     CLRF     PORTD
+00DD   0189           00023     CLRF     PORTE
+                      00024     
+00DE   1283           00025     BCF STATUS,RP0
+00DF   1303           00026     BCF STATUS,RP1
+00E0   0008           00027     RETURN
+                      00028 
+                      00029 
+                      00078     #INCLUDE "CONTADORDEC.INC"
+                      00001 ;--------------------------------------
+                      00002     ;RUTINA DE SALIDA TEMPORIZADOR CUANDO VA DECREMENTEANDO
+                      00003     ;DESDE EL VALOR INICIAL HASTA LLEGAR A 0
+                      00004 ;--------------------------------------
+00E1                  00005 CONTADORDEC:
+                      00006 ;--------------------------------------
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00007     ;LLAMA RUTINA PARA ESCOJER EL TIEMPO DE TEMPORIZACION 
+                      00008 ;--------------------------------------
+00E1   2???           00009     CALL T_ESCOGER
+00E2   01B1           00010     CLRF   CONTEO2
+00E3                  00011 AAA:
+                      00012 ;--------------------------------------
+                      00013     ;LLAMA RUTINA PARA CONERSION DE LOS TIEMPOS HA VALORES EN BCD PARA
+                      00014     ;LA RESPECTIVA VIZUALIZACION
+                      00015     ;CONVERSOR 1 PARA SEGUNDOS
+                      00016     ;CONVERSOR DOS PARA MINUTOS
+                      00017     ;CONVERSOR 3 PARA HORAS
+                      00018 ;--------------------------------------
+00E3   2???           00019     CALL   CONVERSOR1   
+00E4   2???           00020     CALL   CONVERSOR2
+00E5   2???           00021     CALL   CONVERSOR3
+                      00022  
+                      00023 ;--------------------------------------
+                      00024     ;SACA AL PUERTO D LOS DIFERENTES VALORES DE CADA DISPLAY
+                      00025     ;Y VA ROTANDO EL PUERTO C PARA ESCOJER EL ENCENDIDO DE CADA DISPLAY
+                      00026 ;--------------------------------------
+00E6                  00027 SEGUNDOS:
+00E6   0187           00028     CLRF   PORTC
+00E7   0188           00029     CLRF   PORTD
+00E8   1407           00030     BSF    PORTC,RC0
+00E9   082B           00031     MOVF   SALIDABSEG,W
+00EA   2???           00032     CALL   TABLA
+00EB   0088           00033     MOVWF  PORTD
+00EC   2???           00034     CALL   RETARDO1
+00ED   0188           00035     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+00EE   0D87           00036     RLF    PORTC
+00EF   082A           00037     MOVF   SALIDAASEG,W
+00F0   2???           00038     CALL   TABLA
+00F1   0088           00039     MOVWF  PORTD
+00F2   2???           00040     CALL   RETARDO1
+00F3                  00041 MINUTOS:  
+00F3   0188           00042     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+00F4   0D87           00043     RLF    PORTC
+00F5   082D           00044     MOVF   SALIDABMIN,W
+00F6   2???           00045     CALL   TABLA
+00F7   0088           00046     MOVWF  PORTD
+00F8   2???           00047     CALL   RETARDO1
+00F9   0188           00048     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+00FA   0D87           00049     RLF    PORTC
+00FB   082C           00050     MOVF   SALIDAAMIN,W
+00FC   2???           00051     CALL   TABLA
+00FD   0088           00052     MOVWF  PORTD
+00FE   2???           00053     CALL   RETARDO1
+00FF                  00054 HORA:
+00FF   0188           00055     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0100   0D87           00056     RLF    PORTC
+0101   082F           00057     MOVF   SALIDABHOR,W
+0102   2???           00058     CALL   TABLA
+0103   0088           00059     MOVWF  PORTD
+0104   2???           00060     CALL   RETARDO1
+0105   0188           00061     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+0106   0D87           00062     RLF    PORTC
+0107   082E           00063     MOVF   SALIDAAHOR,W
+0108   2???           00064     CALL   TABLA
+0109   0088           00065     MOVWF  PORTD
+010A   2???           00066     CALL   RETARDO1
+                      00067 ;--------------------------------------
+                      00068     ;EL REGISTRO CONTEO2 VA INCREMENTANDO HASTA EL VALOR 100
+                      00069     ; SI ESTE REGISTRO ES MENOR QUE 100 VUELVE A MOSTRAR LOS MISMOS NUMEROS 
+                      00070     ;SIN NINGUN CAMBIO
+                      00071 ;--------------------------------------
+                      00072     
+Message[305]: Using default destination of 1 (file).
+010B   0AB1           00073     INCF   CONTEO2
+010C   3064           00074     MOVLW  .100
+010D   0631           00075     XORWF  CONTEO2,W
+010E   1D03           00076     BTFSS  STATUS,Z
+010F   2???           00077     GOTO   SEGUNDOS
+                      00078 ;--------------------------------------
+                      00079     ;DECREMENTA EL VALOR DE SEGUNDO
+                      00080     ;SI LLEGA A 0 TOMA EL VALOR DE 59
+                      00081     ;Y SALTA A DECREMNETAR LOS MINUTOS
+                      00082 ;--------------------------------------   
+0110   0820           00083     MOVF   VENTANASEG,W
+0111   1903           00084     BTFSC  STATUS,Z
+0112   2???           00085     GOTO   $+3
+Message[305]: Using default destination of 1 (file).
+0113   03A0           00086     DECF   VENTANASEG
+0114   2???           00087     GOTO   AAA
+0115   3020           00088     MOVLW  VENTANASEG
+0116   0084           00089     MOVWF  FSR
+0117   303B           00090     MOVLW  .59
+0118   0080           00091     MOVWF  INDF
+                      00092 ;    -----------------------------------
+                      00093     ;DECREMENTA EL VALOR DE MINUTOS
+                      00094     ;SI LLEGA A 0 TOMA EL VALOR DE 59
+                      00095     ;Y SALTA A DECREMENTAR LOS HORAS
+                      00096 ;-------------------------------------- 
+Message[305]: Using default destination of 1 (file).
+0119   0A84           00097     INCF   FSR
+011A   0821           00098     MOVF   VENTANAMIN,W
+011B   1903           00099     BTFSC  STATUS,Z
+011C   2???           00100     GOTO   $+3
+Message[305]: Using default destination of 1 (file).
+011D   0380           00101     DECF   INDF
+011E   2???           00102     GOTO   AAA
+011F   3021           00103     MOVLW  VENTANAMIN
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0120   0084           00104     MOVWF  FSR
+0121   303B           00105     MOVLW  .59
+0122   0080           00106     MOVWF  INDF
+                      00107     
+                      00108 ;-----------------------------------
+                      00109     ;DECREMENTA EL VALOR DE HORAS
+                      00110     ;EN ESTE PUNTO SALTA SI SEGUNDOS LLEGA A 0
+                      00111     ;MINUTOS LLEGA A 0 Y HORAS EN 0
+                      00112     ;RETORNA AL PROGRMA PRINCIPAL
+                      00113 ;-------------------------------------- 
+0123   0822           00114     MOVF   VENTANAHOR,W
+0124   1903           00115     BTFSC  STATUS,Z
+0125   2???           00116     GOTO   $+3
+Message[305]: Using default destination of 1 (file).
+0126   0380           00117     DECF   INDF
+0127   2???           00118     GOTO   AAA
+                      00119     
+0128   0008           00120     RETURN
+                      00121 
+                      00122 
+                      00079     #INCLUDE "CONTADORINC.INC"
+                      00001 ;--------------------------------------
+                      00002     ;RUTINA DE SALIDA TEMPORIZADOR CUANDO VA CONTANDO NEGATIVAMENTE
+                      00003     ;Y CUENTA HASTA QUE SE DE UN PULSO DE ENTRADA
+                      00004     ;EN LOS DISPLAYS DESTINADOS A HORAS SE PODRA OBSERVAR UN SIGNO DE MENOS
+                      00005 ;--------------------------------------
+                      00006     
+                      00007 ;--------------------------------------
+                      00008     ;INICIALIZA LOS REGISTROS DE SEGUNDOS EN 1 Y MINUTOS EN 0
+                      00009 ;--------------------------------------
+0129                  00010 CONTADORINC:
+0129   01B1           00011     CLRF   CONTEO2
+012A   0187           00012     CLRF   PORTC
+012B   0188           00013     CLRF   PORTD
+012C   01B2           00014     CLRF   REGOP
+012D   01B1           00015     CLRF   CONTEO2
+012E   3020           00016     MOVLW  VENTANASEG
+012F   0084           00017     MOVWF  FSR
+0130   3001           00018     MOVLW  .1
+0131   0080           00019     MOVWF  INDF
+Message[305]: Using default destination of 1 (file).
+0132   0A84           00020     INCF   FSR
+0133   3000           00021     MOVLW  .0
+0134   0080           00022     MOVWF  INDF
+                      00023 ;--------------------------------------
+                      00024     ;CONVIERTE EN BCD LOS VALORES DE LOS REGISTROS DE SEGUNDOS Y MINUTOS
+                      00025 ;--------------------------------------
+0135                  00026 BBB:
+0135   2???           00027     CALL   CONVERSOR1   
+0136   2???           00028     CALL   CONVERSOR2
+                      00029 ;--------------------------------------
+                      00030     ;VIZUALIZA EN EL PUERTO D LOS VALORES SEGUNDOS Y MINUTOS
+                      00031     ;ROTA EL PUERTO C PARA SELECCIONAR QUE DISPLAY ENCENDER
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00032 ;--------------------------------------  
+0137                  00033 SEGUNDOS1:
+0137   0187           00034     CLRF   PORTC
+0138   0188           00035     CLRF   PORTD
+0139   1407           00036     BSF    PORTC,RC0
+013A   082B           00037     MOVF   SALIDABSEG,W
+013B   2???           00038     CALL   TABLA
+013C   0088           00039     MOVWF  PORTD
+013D   2???           00040     CALL   RETARDO1
+013E   0188           00041     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+013F   0D87           00042     RLF    PORTC
+0140   082A           00043     MOVF   SALIDAASEG,W
+0141   2???           00044     CALL   TABLA
+0142   0088           00045     MOVWF  PORTD
+0143   2???           00046     CALL   RETARDO1
+0144                  00047 MINUTOS1:  
+0144   0188           00048     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+0145   0D87           00049     RLF    PORTC
+0146   082D           00050     MOVF   SALIDABMIN,W
+0147   2???           00051     CALL   TABLA
+0148   0088           00052     MOVWF  PORTD
+0149   2???           00053     CALL   RETARDO1
+014A   0188           00054     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+014B   0D87           00055     RLF    PORTC
+014C   082C           00056     MOVF   SALIDAAMIN,W
+014D   2???           00057     CALL   TABLA
+014E   0088           00058     MOVWF  PORTD
+014F   2???           00059     CALL   RETARDO1
+                      00060     
+                      00061 ;--------------------------------------
+                      00062     ;LOS DIPLAYS DE HORA SE OBSERVARA SIGNO NEGATIVO
+                      00063     ;INDICANDO QUE LA TEMPORIZADOR ESTA EN SECUENCIA NEGATIVA
+                      00064 ;-------------------------------------- 
+0150                  00065 HORA1:
+0150   0188           00066     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+0151   0D87           00067     RLF    PORTC
+0152   3001           00068     MOVLW  0X01
+0153   0088           00069     MOVWF  PORTD
+0154   2???           00070     CALL   RETARDO1
+0155   0188           00071     CLRF   PORTD
+Message[305]: Using default destination of 1 (file).
+0156   0D87           00072     RLF    PORTC
+0157   3001           00073     MOVLW  0X01
+0158   0088           00074     MOVWF  PORTD
+0159   2???           00075     CALL   RETARDO1
+                      00076     
+                      00077 ;--------------------------------------
+                      00078     ;TERMINA EL CONTEO NEGATIVO Y RETORNA AL PROGRAMA PRINCIPAL
+                      00079     ;SI SE OPRIME EL PULSADOR
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00080 ;-------------------------------------- 
+                      00081 
+015A   1C89           00082     BTFSS  PORTE,RE1
+015B   2???           00083     GOTO   $+2
+015C   2???           00084     GOTO   SALIR
+                      00085     
+                      00086 ;--------------------------------------
+                      00087     ;EL REGISTRO CONTEO2 VA INCREMENTANDO HASTA EL VALOR 100
+                      00088     ; SI ESTE REGISTRO ES MENOR QUE 100 VUELVE A MOSTRAR LOS MISMOS NUMEROS 
+                      00089     ;SIN NINGUN CAMBIO
+                      00090 ;-------------------------------------- 
+                      00091     
+Message[305]: Using default destination of 1 (file).
+015D   0AB1           00092     INCF   CONTEO2
+015E   3064           00093     MOVLW  .100
+015F   0631           00094     XORWF  CONTEO2,W
+0160   1D03           00095     BTFSS  STATUS,Z
+0161   2???           00096     GOTO   SEGUNDOS1
+                      00097 ;------------------------------------------
+                      00098     ;INCREMENTA EL VALOR DE SEGUNDO
+                      00099     ;SI LLEGA A 59 TOMA EL VALOR DE 0
+                      00100     ;Y SALTA A INCREMENTAR LOS MINUTOS    
+                      00101 ;-------------------------------------------
+                      00102     
+0162   3020           00103     MOVLW  VENTANASEG
+0163   0084           00104     MOVWF  FSR
+0164   303B           00105     MOVLW  .59
+0165   00B2           00106     MOVWF  REGOP
+0166   0620           00107     XORWF  VENTANASEG,W
+0167   1903           00108     BTFSC  STATUS,Z
+0168   2???           00109     GOTO   $+3
+Message[305]: Using default destination of 1 (file).
+0169   0AA0           00110     INCF   VENTANASEG
+016A   2???           00111     GOTO   BBB
+016B   3020           00112     MOVLW  VENTANASEG
+016C   0084           00113     MOVWF  FSR
+016D   0180           00114     CLRF   INDF
+                      00115 ;------------------------------------------
+                      00116     ;INCREMENTA EL VALOR DE MINUTOS
+                      00117     ;SI LLEGA A 59 TOMA EL VALOR DE 0   
+                      00118 ;-------------------------------------------
+Message[305]: Using default destination of 1 (file).
+016E   0A84           00119     INCF   FSR
+016F   303B           00120     MOVLW  .59
+0170   00B2           00121     MOVWF  REGOP
+0171   0621           00122     XORWF  VENTANAMIN,W
+0172   1903           00123     BTFSC  STATUS,Z
+0173   2???           00124     GOTO   $+3
+Message[305]: Using default destination of 1 (file).
+0174   0A80           00125     INCF   INDF
+0175   2???           00126     GOTO   BBB
+0176   3021           00127     MOVLW  VENTANAMIN
+0177   0084           00128     MOVWF  FSR
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0178   0180           00129     CLRF   INDF
+0179                  00130 SALIR:
+0179   0008           00131     RETURN
+                      00132 
+                      00133 
+                      00080     #INCLUDE "CONVERSOR1.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;RUTINA DE CONVERSOR EL REGISTRO DE SEGUNDOS
+                      00003     ;SON GUARDADOS EN DOS REGISTROS LAS UNIDADES Y DECENAS DEL REGISTRO SEGUNDOS
+                      00004     ;ESTO CON EL FIN DE MOSTRAR CADA DIGITO EN LOS DISPLAYS
+                      00005 ;-----------------------------------------------------
+017A                  00006 CONVERSOR1:
+017A   01A7           00007     CLRF     ENTRADASEG
+017B   01AA           00008     CLRF     SALIDAASEG
+017C   01AB           00009     CLRF     SALIDABSEG
+017D   0820           00010     MOVF     0X20,W
+017E   00A7           00011     MOVWF    ENTRADASEG
+                      00012     
+017F                  00013 BCD_BAJO:
+017F   0827           00014     MOVF     ENTRADASEG,W
+0180   300A           00015     MOVLW   .10        ;MOVER 10 AL ACUMULADOR  W
+0181   02A7           00016     SUBWF   ENTRADASEG,f  ;RESTA ENTRE EL REGISTRO ACAMBIAR Y 100
+0182   1C03           00017     BTFSS   STATUS,C   ;SALTO SI EL CARRY ESTA EN 1
+0183   2???           00018     GOTO    SUMA_DIEZ
+Message[305]: Using default destination of 1 (file).
+0184   0AAA           00019     INCF    SALIDAASEG    ;INCREMENTO DEL VALOR DEL REGISTRO UNIDECE
+0185   2???           00020     GOTO    BCD_BAJO
+0186                  00021 SUMA_DIEZ:
+                      00022     
+0186   0827           00023     MOVF    ENTRADASEG,W
+0187   300A           00024     MOVLW   .10
+0188   07A7           00025     ADDWF   ENTRADASEG,F
+0189   0827           00026     MOVF    ENTRADASEG,W
+018A   00AB           00027     MOVWF   SALIDABSEG
+018B   0008           00028     RETURN
+                      00081     #INCLUDE "CONVERSOR2.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;RUTINA DE CONVERSOR EL REGISTRO DE MINUTOS
+                      00003     ;SON GUARDADOS EN DOS REGISTROS LAS UNIDADES Y DECENAS DEL REGISTRO MINUTOS
+                      00004     ;ESTO CON EL FIN DE MOSTRAR CADA DIGITO EN LOS DISPLAYS
+                      00005 ;-----------------------------------------------------
+018C                  00006 CONVERSOR2:    
+018C   01A8           00007     CLRF     ENTRADAMIN
+018D   01AC           00008     CLRF     SALIDAAMIN
+018E   01AD           00009     CLRF     SALIDABMIN
+018F   0821           00010     MOVF     0X21,W
+0190   00A8           00011     MOVWF    ENTRADAMIN
+                      00012     
+0191                  00013 BCD_BAJO1:
+0191   0828           00014     MOVF     ENTRADAMIN,W
+0192   300A           00015     MOVLW   .10        ;MOVER 10 AL ACUMULADOR  W
+0193   02A8           00016     SUBWF   ENTRADAMIN,f  ;RESTA ENTRE EL REGISTRO ACAMBIAR Y 100
+0194   1C03           00017     BTFSS   STATUS,C   ;SALTO SI EL CARRY ESTA EN 1
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0195   2???           00018     GOTO    SUMA_DIEZ1
+Message[305]: Using default destination of 1 (file).
+0196   0AAC           00019     INCF    SALIDAAMIN    ;INCREMENTO DEL VALOR DEL REGISTRO UNIDECE
+0197   2???           00020     GOTO    BCD_BAJO1
+0198                  00021 SUMA_DIEZ1:
+                      00022     
+0198   0828           00023     MOVF    ENTRADAMIN,W
+0199   300A           00024     MOVLW   .10
+019A   07A8           00025     ADDWF   ENTRADAMIN,F
+019B   0828           00026     MOVF    ENTRADAMIN,W
+019C   00AD           00027     MOVWF   SALIDABMIN
+019D   0008           00028     RETURN
+                      00029 
+                      00030 
+                      00082     #INCLUDE "CONVERSOR3.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;RUTINA DE CONVERSOR EL REGISTRO DE HORAS
+                      00003     ;SON GUARDADOS EN DOS REGISTROS LAS UNIDADES Y DECENAS DEL REGISTRO HORAS
+                      00004     ;ESTO CON EL FIN DE MOSTRAR CADA DIGITO EN LOS DISPLAYS
+                      00005 ;-----------------------------------------------------
+019E                  00006 CONVERSOR3:    
+019E   01A9           00007     CLRF     ENTRADAHOR
+019F   01AE           00008     CLRF     SALIDAAHOR
+01A0   01AF           00009     CLRF     SALIDABHOR
+01A1   0822           00010     MOVF     0X22,W
+01A2   00A9           00011     MOVWF    ENTRADAHOR
+                      00012     
+01A3                  00013 BCD_BAJO2:
+01A3   0829           00014     MOVF     ENTRADAHOR,W
+01A4   300A           00015     MOVLW   .10        ;MOVER 10 AL ACUMULADOR  W
+01A5   02A9           00016     SUBWF   ENTRADAHOR,f  ;RESTA ENTRE EL REGISTRO ACAMBIAR Y 100
+01A6   1C03           00017     BTFSS   STATUS,C   ;SALTO SI EL CARRY ESTA EN 1
+01A7   2???           00018     GOTO    SUMA_DIEZ2
+Message[305]: Using default destination of 1 (file).
+01A8   0AAE           00019     INCF    SALIDAAHOR    ;INCREMENTO DEL VALOR DEL REGISTRO UNIDECE
+01A9   2???           00020     GOTO    BCD_BAJO2
+01AA                  00021 SUMA_DIEZ2:
+                      00022     
+01AA   0829           00023     MOVF    ENTRADAHOR,W
+01AB   300A           00024     MOVLW   .10
+01AC   07A9           00025     ADDWF   ENTRADAHOR,F
+01AD   0829           00026     MOVF    ENTRADAHOR,W
+01AE   00AF           00027     MOVWF   SALIDABHOR
+01AF   0008           00028     RETURN
+                      00029 
+                      00030 
+                      00083     #INCLUDE "INIG_REG.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;RUTINA USANDO EL DIRECCIONAMIENTO INDIRECTO INICIALIZAMOS LOS REGISTROS
+                      00003 ;----------------------------------------------------------
+01B0                  00004 INIG_REG:
+01B0   3020           00005     MOVLW 0X20
+01B1   0084           00006     MOVWF FSR
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01B2   0180           00007     CLRF  INDF
+Message[305]: Using default destination of 1 (file).
+01B3   0A84           00008     INCF  FSR
+01B4   3040           00009     MOVLW 0X40
+01B5   0604           00010     XORWF FSR,W
+01B6   1D03           00011     BTFSS STATUS,Z
+01B7   2???           00012     GOTO  $-5
+Warning[203]: Found opcode in column 1. (RETURN)
+01B8   0008           00013 RETURN
+                      00014 
+                      00084     #INCLUDE "RETARDO1.INC"
+                      00001 ;--------------------------------------------------------
+                      00002   ;RETARDO DE 300uS ES LA DURACION DE CADA VISUALIZACION ENTRE CADA DISPLAY
+                      00003 ;----------------------------------------------------------
+01B9                  00004 RETARDO1:
+01B9   30C8           00005             MOVLW  .200
+01BA   00B4           00006             MOVWF  CONTA2
+Message[305]: Using default destination of 1 (file).
+01BB   0BB4           00007             DECFSZ CONTA2
+01BC   2???           00008             GOTO   $-1
+01BD   0008           00009             RETURN
+                      00010 
+                      00011 
+                      00085     #INCLUDE "T_ESCOGER.INC"
+                      00001 ;--------------------------------------------------------
+                      00002   ;RUTINA DONDE TENIENDO EN CUENTA LA POSICION DE LOS DIP SWITCH 
+                      00003   ;SE ESCOJEN LOS TIEMPOS DEL TEMPORIZACION
+                      00004   ;TIEMPO 1 000
+                      00005   ;50 SEGUNDOS
+                      00006   
+                      00007   ;TIEMPO 2 001
+                      00008   ;1 MINUTO 10 SEGUNDOS
+                      00009   
+                      00010   ;TIEMPO 3 010
+                      00011   ;3 MINUTOS  30 SEGUNDOS
+                      00012 
+                      00013   ;TIEMPO 4 011
+                      00014   ;4 MINUTOS  17 SEGUNDOS
+                      00015 
+                      00016   ;TIEMPO 5 100
+                      00017   ;5 MINUTOS  0 SEGUNDOS
+                      00018 ;----------------------------------------------------------
+01BE                  00019 T_ESCOGER:
+01BE   1905           00020     BTFSC PORTA,RA2
+01BF   2???           00021     GOTO  TIEMPO_5
+01C0   1885           00022     BTFSC PORTA,RA1
+01C1   2???           00023     GOTO  BIT1
+01C2   1805           00024     BTFSC PORTA,RA0
+01C3   2???           00025     GOTO  TIEMPO_2
+Warning[207]: Found label after column 1. (TIEMPO_1)
+01C4                  00026   TIEMPO_1:
+01C4   3020           00027     MOVLW VENTANASEG
+01C5   0084           00028     MOVWF FSR
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01C6   3032           00029     MOVLW .50
+01C7   0080           00030     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01C8   0A84           00031     INCF  FSR
+01C9   0180           00032     CLRF  INDF
+Message[305]: Using default destination of 1 (file).
+01CA   0A84           00033     INCF  FSR
+01CB   0180           00034     CLRF  INDF
+01CC   2???           00035     GOTO  CAMBIAR 
+Warning[207]: Found label after column 1. (TIEMPO_2)
+01CD                  00036   TIEMPO_2:
+01CD   3020           00037     MOVLW VENTANASEG
+01CE   0084           00038     MOVWF FSR
+01CF   300A           00039     MOVLW .10
+01D0   0080           00040     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01D1   0A84           00041     INCF  FSR
+01D2   3001           00042     MOVLW .1
+01D3   0080           00043     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01D4   0A84           00044     INCF  FSR
+01D5   0180           00045     CLRF  INDF
+01D6   2???           00046     GOTO  CAMBIAR 
+                      00047 
+Warning[207]: Found label after column 1. (BIT1)
+01D7                  00048   BIT1:
+01D7   1805           00049     BTFSC PORTA,RA0
+01D8   2???           00050     GOTO TIEMPO_4
+Warning[207]: Found label after column 1. (TIEMPO_3)
+01D9                  00051  TIEMPO_3:
+01D9   3020           00052     MOVLW VENTANASEG
+01DA   0084           00053     MOVWF FSR
+01DB   301E           00054     MOVLW .30
+01DC   0080           00055     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01DD   0A84           00056     INCF  FSR
+01DE   3003           00057     MOVLW .3
+01DF   0080           00058     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01E0   0A84           00059     INCF  FSR
+01E1   0180           00060     CLRF  INDF
+01E2   2???           00061     GOTO  CAMBIAR 
+Warning[207]: Found label after column 1. (TIEMPO_4)
+01E3                  00062   TIEMPO_4:
+01E3   3020           00063     MOVLW VENTANASEG
+01E4   0084           00064     MOVWF FSR
+01E5   3011           00065     MOVLW .17
+01E6   0080           00066     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01E7   0A84           00067     INCF  FSR
+01E8   3004           00068     MOVLW .4
+01E9   0080           00069     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01EA   0A84           00070     INCF  FSR
+01EB   0180           00071     CLRF  INDF
+01EC   2???           00072     GOTO  CAMBIAR 
+Warning[207]: Found label after column 1. (TIEMPO_5)
+01ED                  00073   TIEMPO_5:
+01ED   3020           00074     MOVLW VENTANASEG
+01EE   0084           00075     MOVWF FSR
+01EF   0180           00076     CLRF  INDF
+Message[305]: Using default destination of 1 (file).
+01F0   0A84           00077     INCF  FSR
+01F1   3005           00078     MOVLW .5
+01F2   0080           00079     MOVWF INDF
+Message[305]: Using default destination of 1 (file).
+01F3   0A84           00080     INCF  FSR
+01F4   0180           00081     CLRF  INDF
+01F5   2???           00082     GOTO  CAMBIAR 
+Warning[207]: Found label after column 1. (CAMBIAR)
+01F6                  00083  CAMBIAR:   
+01F6   0008           00084    RETURN
+                      00086     #INCLUDE "ROTAR.INC"
+                      00001 ;--------------------------------------------------------
+                      00002   ;RUTINA DONDE CAMBIAMOS DE REGISTRO PARA IR CAMBIANDO DE DISPLAY 
+                      00003   ;LAS LETRAS
+                      00004   ;Y DONDE SE PUEDE ESCOHER CUAL MENSAJE SE VISUALIZA SEGUN LA POSICION DEL
+                      00005   ;DIP SWITCH
+                      00006 ;----------------------------------------------------------
+01F7                  00007 ROTAR:
+01F7   2???           00008     CALL  ROTAR_CARACTER
+                      00009     
+01F8   1905           00010     BTFSC PORTA,RA2
+01F9   2???           00011     GOTO  MENSAJE5
+01FA   1885           00012     BTFSC PORTA,RA1
+01FB   2???           00013     GOTO  BITEN1
+01FC   1805           00014     BTFSC PORTA,RA0
+01FD   2???           00015     GOTO  MENSAJE2
+01FE                  00016 MENSAJE1:
+01FE   0837           00017     MOVF  REG3,W    
+01FF   2???           00018     CALL  MENSAJE_1
+0200   2???           00019     GOTO  NEXT
+0201                  00020 MENSAJE2:
+0201   0837           00021     MOVF  REG3,W    
+0202   2???           00022     CALL  MENSAJE_2
+0203   2???           00023     GOTO  NEXT
+0204                  00024 BITEN1:
+0204   1805           00025     BTFSC PORTA,RA0
+0205   2???           00026     GOTO  MENSAJE4
+0206   0837           00027     MOVF  REG3,W    
+0207   2???           00028     CALL  MENSAJE_3
+0208   2???           00029     GOTO  NEXT
+0209                  00030 MENSAJE4:
+0209   0837           00031     MOVF  REG3,W    
+020A   2???           00032     CALL  MENSAJE_4
+020B   2???           00033     GOTO  NEXT
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+020C                  00034 MENSAJE5:
+020C   0837           00035     MOVF  REG3,W
+020D   2???           00036     CALL  MENSAJE_5
+020E                  00037 NEXT:    
+020E   0080           00038     MOVWF INDF
+020F   3021           00039     MOVLW .33
+0210   0637           00040     XORWF REG3,W
+0211   1903           00041     BTFSC STATUS,Z
+0212   2???           00042     GOTO  $+3
+Message[305]: Using default destination of 1 (file).
+0213   0AB7           00043     INCF  REG3
+0214   0008           00044     RETURN
+0215   01B7           00045     CLRF  REG3
+0216   0008           00046     RETURN
+                      00047 
+                      00048 
+                      00087     #INCLUDE"SALIDA_VISUAL.INC"
+                      00001 ;--------------------------------------------------------
+                      00002   ;MUESTRA LOS CONTENIDOS DE CADA REGISTROS EN LOS 6 DISPLAYS EN EL PUERTO D
+                      00003   ;HABILITANDO CUAL DISPLAY SE DESEA ENCENDER EN EL PUERTO C
+                      00004   ;PROCESO QUE TIENE 100 REPETICIONES
+                      00005   ;PAARA UN DESPLAZAMIENTO CADA DE 200mS
+                      00006 ;----------------------------------------------------------
+0217                  00007 SALIDA_VISUAL:
+0217   0187           00008     CLRF  PORTC
+0218   1707           00009     BSF   PORTC,6
+0219   3020           00010     MOVLW VENTANASEG
+021A   0084           00011     MOVWF FSR
+021B   0800           00012     MOVF  INDF,W
+021C   0088           00013     MOVWF PORTD
+Message[305]: Using default destination of 1 (file).
+021D   0C87           00014     RRF   PORTC
+021E   2???           00015     CALL  RETARDO1
+Message[305]: Using default destination of 1 (file).
+021F   0A84           00016     INCF  FSR
+Message[305]: Using default destination of 1 (file).
+0220   0AB5           00017     INCF  REG1
+0221   3006           00018     MOVLW 0X06
+0222   0635           00019     XORWF REG1,W
+0223   1D03           00020     BTFSS STATUS,Z
+0224   2???           00021     GOTO  $-9
+0225   01B5           00022     CLRF  REG1
+Message[305]: Using default destination of 1 (file).
+0226   0AB6           00023     INCF  REG2
+0227   3064           00024     MOVLW 0X64
+0228   0636           00025     XORWF REG2,W
+0229   1D03           00026     BTFSS STATUS,Z
+022A   2???           00027     GOTO SALIDA_VISUAL
+022B   01B6           00028     CLRF REG2
+022C   0187           00029     CLRF PORTC
+022D   0008           00030     RETURN
+                      00031 
+                      00032 
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00033 
+                      00034 
+                      00035 
+                      00088     
+                      00089     #INCLUDE"ROTAR_CARACTER.INC"
+                      00001 ;--------------------------------------------------------
+                      00002   ;DESPLAZA EL CONTENIDO UN REGISTRO AL SIGUIENTE REGISTRO ES DECIR
+                      00003   ;ES AQUI DONDE DESPLAZAMOS LAS LETRAS ESTE PROCESO SE REALIZA 6 VECES
+                      00004   ;EL NUMERO DE DISPLAYS
+                      00005 ;----------------------------------------------------------
+022E                  00006 ROTAR_CARACTER:
+022E   3020           00007     MOVLW  VENTANASEG
+022F   0084           00008     MOVWF  FSR
+Message[305]: Using default destination of 1 (file).
+0230   0A84           00009     INCF   FSR
+0231   0800           00010     MOVF   INDF,W
+Message[305]: Using default destination of 1 (file).
+0232   0384           00011     DECF   FSR
+0233   0080           00012     MOVWF  INDF
+Message[305]: Using default destination of 1 (file).
+0234   0A84           00013     INCF   FSR
+Message[305]: Using default destination of 1 (file).
+0235   0AB8           00014     INCF   REG4
+0236   3005           00015     MOVLW  0X05
+0237   0638           00016     XORWF  REG4,W
+0238   1D03           00017     BTFSS  STATUS,Z
+0239   2???           00018     GOTO   ROTAR_CARACTER+2
+023A   01B8           00019     CLRF   REG4
+023B   0008           00020     RETURN
+                      00021     
+                      00022 
+                      00023 
+                      00024 
+                      00025 
+                      00090     #INCLUDE"PUBLIC.INC"
+                      00001 ;--------------------------------------------------------
+                      00002   ;RUTINA PARA MOSTRAR ALGUNO DE LOS 
+                      00003 ;----------------------------------------------------------
+023C                  00004 PUBLIC:
+023C   2???           00005     CALL  INIG_REG
+                      00006 
+023D                  00007 VOLVER:
+023D   2???           00008     CALL   SALIDA_VISUAL
+023E   2???           00009     CALL   ROTAR
+Message[305]: Using default destination of 1 (file).
+023F   0AB9           00010     INCF   REG5
+0240   3024           00011     MOVLW  0X24
+0241   0639           00012     XORWF  REG5,W
+0242   1D03           00013     BTFSS  STATUS,Z
+0243   2???           00014     GOTO   VOLVER
+0244   0008           00015     RETURN
+                      00016  
+                      00017 
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00018 
+                      00019 
+                      00020 
+                      00021 
+                      00022 
+                      00023 
+                      00024 
+                      00025 
+                      00091     #INCLUDE "ESPERA.INC"
+                      00001 ;--------------------------------------------------------
+                      00002     ;RUTINA QUE MUESTRA UN MENSAJE "ESPERA" AL TERMINAR DE MOSTRAR 
+                      00003     ;EL MENSAJE DE 30 CARACTERES EL PROGRAMA SE QUEDA EN ESTA RUTINA 
+                      00004     ;HASTA QUE SE OPRIMA EL PULSADOR Y SE REINICI EL PROGRAMA
+                      00005 ;-----------------------------------------------------
+0245                  00006 ESPERA:
+0245   01BA           00007     CLRF  REG6
+0246   0187           00008     CLRF  PORTC 
+0247   0188           00009     CLRF  PORTD
+0248   1407           00010     BSF   PORTC,0
+0249                  00011 LLAMAR:    
+0249   083A           00012     MOVF  REG6,W
+024A   2???           00013     CALL  TABLAESPERA
+024B   0088           00014     MOVWF PORTD
+024C   2???           00015     CALL  RETARDO1
+024D   1889           00016     BTFSC PORTE,RE1
+024E   2???           00017     GOTO  TERMINAR
+024F   0188           00018     CLRF  PORTD
+Message[305]: Using default destination of 1 (file).
+0250   0D87           00019     RLF   PORTC
+Message[305]: Using default destination of 1 (file).
+0251   0ABA           00020     INCF  REG6
+0252   3006           00021     MOVLW 0X06
+0253   063A           00022     XORWF REG6,W
+0254   1D03           00023     BTFSS STATUS,Z
+0255   2???           00024     GOTO  LLAMAR
+0256   2???           00025     GOTO  ESPERA 
+0257                  00026 TERMINAR:
+0257   0008           00027     RETURN
+                      00092     
+2FF2 3FFF             00093     END
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+AAA                               000000E3
+ABDEN                             00000000
+ABDOVF                            00000007
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANS0                              00000000
+ANS1                              00000001
+ANS10                             00000002
+ANS11                             00000003
+ANS12                             00000004
+ANS13                             00000005
+ANS2                              00000002
+ANS3                              00000003
+ANS4                              00000004
+ANS5                              00000005
+ANS6                              00000006
+ANS7                              00000007
+ANS8                              00000000
+ANS9                              00000001
+ANSEL                             00000188
+ANSELH                            00000189
+BAUDCTL                           00000187
+BBB                               00000135
+BCD_BAJO                          0000017F
+BCD_BAJO1                         00000191
+BCD_BAJO2                         000001A3
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BIT1                              000001D7
+BITEN1                            00000204
+BRG0                              00000000
+BRG1                              00000001
+BRG10                             00000002
+BRG11                             00000003
+BRG12                             00000004
+BRG13                             00000005
+BRG14                             00000006
+BRG15                             00000007
+BRG16                             00000003
+BRG2                              00000002
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BRG3                              00000003
+BRG4                              00000004
+BRG5                              00000005
+BRG6                              00000006
+BRG7                              00000007
+BRG8                              00000000
+BRG9                              00000001
+BRGH                              00000002
+C                                 00000000
+C1CH0                             00000000
+C1CH1                             00000001
+C1IE                              00000005
+C1IF                              00000005
+C1OE                              00000005
+C1ON                              00000007
+C1OUT                             00000006
+C1POL                             00000004
+C1R                               00000002
+C1RSEL                            00000005
+C1SEN                             00000005
+C2CH0                             00000000
+C2CH1                             00000001
+C2IE                              00000006
+C2IF                              00000006
+C2OE                              00000005
+C2ON                              00000007
+C2OUT                             00000006
+C2POL                             00000004
+C2R                               00000002
+C2REN                             00000004
+C2RSEL                            00000004
+C2SYNC                            00000000
+CAMBIAR                           000001F6
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CCPR1L                            00000015
+CCPR2                             0000001B
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHS0                              00000002
+CHS1                              00000003
+CHS2                              00000004
+CHS3                              00000005
+CKE                               00000006
+CKP                               00000004
+CM1CON0                           00000107
+CM2CON0                           00000108
+CM2CON1                           00000109
+CONFIGURACION                     000000C9
+CONTA1                            00000033
+CONTA2                            00000034
+CONTADORDEC                       000000E1
+CONTADORINC                       00000129
+CONTEO                            00000030
+CONTEO2                           00000031
+CONVERSOR1                        0000017A
+CONVERSOR2                        0000018C
+CONVERSOR3                        0000019E
+CREN                              00000004
+CSRC                              00000007
+D                                 00000005
+DATA_ADDRESS                      00000005
+DC                                00000001
+DC1B0                             00000004
+DC1B1                             00000005
+DC2B0                             00000004
+DC2B1                             00000005
+D_A                               00000005
+D_NOT_A                           00000005
+ECCPAS                            0000009C
+ECCPAS0                           00000004
+ECCPAS1                           00000005
+ECCPAS2                           00000006
+ECCPASE                           00000007
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDAT                             0000010C
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+ENTRADAHOR                        00000029
+ENTRADAMIN                        00000028
+ENTRADASEG                        00000027
+ESPERA                            00000245
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 22
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+FVREN                             00000000
+GCEN                              00000007
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+HORA                              000000FF
+HORA1                             00000150
+HTS                               00000002
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+INDF                              00000000
+INICIO                            00000000
+INIG_REG                          000001B0
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOCB                              00000096
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+IOCB4                             00000004
+IOCB5                             00000005
+IOCB6                             00000006
+IOCB7                             00000007
+IRCF0                             00000004
+IRCF1                             00000005
+IRCF2                             00000006
+IRP                               00000007
+LLAMAR                            00000249
+LTS                               00000001
+MC1OUT                            00000007
+MC2OUT                            00000006
+MENSAJE1                          000001FE
+MENSAJE2                          00000201
+MENSAJE4                          00000209
+MENSAJE5                          0000020C
+MENSAJE_1                         00000014
+MENSAJE_2                         00000037
+MENSAJE_3                         0000005A
+MENSAJE_4                         0000007D
+MENSAJE_5                         0000009F
+MINUTOS                           000000F3
+MINUTOS1                          00000144
+MSK                               00000093
+MSK0                              00000000
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 23
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+MSK1                              00000001
+MSK2                              00000002
+MSK3                              00000003
+MSK4                              00000004
+MSK5                              00000005
+MSK6                              00000006
+MSK7                              00000007
+NEXT                              0000020E
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OERR                              00000001
+OPTION_REG                        00000081
+OSCCON                            0000008F
+OSCTUNE                           00000090
+OSFIE                             00000007
+OSFIF                             00000007
+OSTS                              00000003
+P                                 00000004
+P1M0                              00000006
+P1M1                              00000007
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PDC0                              00000000
+PDC1                              00000001
+PDC2                              00000002
+PDC3                              00000003
+PDC4                              00000004
+PDC5                              00000005
+PDC6                              00000006
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 24
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PR2                               00000092
+PRSEN                             00000007
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSSAC0                            00000002
+PSSAC1                            00000003
+PSSBD0                            00000000
+PSSBD1                            00000001
+PSTRCON                           0000009D
+PUBLIC                            0000023C
+PULSR                             00000002
+PULSS                             00000003
+PWM1CON                           0000009B
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RC0                               00000000
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIDL                             00000006
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RD0                               00000000
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 25
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RD1                               00000001
+RD2                               00000002
+RD3                               00000003
+RD4                               00000004
+RD5                               00000005
+RD6                               00000006
+RD7                               00000007
+RE0                               00000000
+RE1                               00000001
+RE2                               00000002
+RE3                               00000003
+READ_WRITE                        00000002
+REG1                              00000035
+REG2                              00000036
+REG3                              00000037
+REG4                              00000038
+REG5                              00000039
+REG6                              0000003A
+REGOP                             00000032
+RETARDO1                          000001B9
+ROTAR                             000001F7
+ROTAR_CARACTER                    0000022E
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SALIDAAHOR                        0000002E
+SALIDAAMIN                        0000002C
+SALIDAASEG                        0000002A
+SALIDABHOR                        0000002F
+SALIDABMIN                        0000002D
+SALIDABSEG                        0000002B
+SALIDA_VISUAL                     00000217
+SALIR                             00000179
+SBOREN                            00000004
+SCKP                              00000004
+SCS                               00000000
+SEGUNDOS                          000000E6
+SEGUNDOS1                         00000137
+SEN                               00000000
+SENDB                             00000003
+SMP                               00000007
+SPBRG                             00000099
+SPBRGH                            0000009A
+SPEN                              00000007
+SR0                               00000006
+SR1                               00000007
+SRCON                             00000185
+SREN                              00000005
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 26
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPMSK                            00000093
+SSPOV                             00000006
+SSPSTAT                           00000094
+START                             00000002
+STATUS                            00000003
+STRA                              00000000
+STRB                              00000001
+STRC                              00000002
+STRD                              00000003
+STRSYNC                           00000004
+SUMA_DIEZ                         00000186
+SUMA_DIEZ1                        00000198
+SUMA_DIEZ2                        000001AA
+SWDTEN                            00000000
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1GINV                            00000007
+T1GIV                             00000007
+T1GSS                             00000001
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TABLA                             00000009
+TABLAESPERA                       000000C2
+TERMINAR                          00000257
+TIEMPO_1                          000001C4
+TIEMPO_2                          000001CD
+TIEMPO_3                          000001D9
+TIEMPO_4                          000001E3
+TIEMPO_5                          000001ED
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 27
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000087
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+TRISC7                            00000007
+TRISD                             00000088
+TRISD0                            00000000
+TRISD1                            00000001
+TRISD2                            00000002
+TRISD3                            00000003
+TRISD4                            00000004
+TRISD5                            00000005
+TRISD6                            00000006
+TRISD7                            00000007
+TRISE                             00000089
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 28
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRISE3                            00000003
+TRMT                              00000001
+TUN0                              00000000
+TUN1                              00000001
+TUN2                              00000002
+TUN3                              00000003
+TUN4                              00000004
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+T_ESCOGER                         000001BE
+UA                                00000001
+ULPWUE                            00000005
+ULPWUIE                           00000002
+ULPWUIF                           00000002
+VCFG0                             00000004
+VCFG1                             00000005
+VENTANAHOR                        00000022
+VENTANAMIN                        00000021
+VENTANASEG                        00000020
+VOLVER                            0000023D
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000097
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+VRSS                              00000004
+W                                 00000000
+WCOL                              00000007
+WDTCON                            00000105
+WDTPS0                            00000001
+WDTPS1                            00000002
+WDTPS2                            00000003
+WDTPS3                            00000004
+WPUB                              00000095
+WPUB0                             00000000
+WPUB1                             00000001
+WPUB2                             00000002
+WPUB3                             00000003
+WPUB4                             00000004
+WPUB5                             00000005
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 29
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+WPUB6                             00000006
+WPUB7                             00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+WUE                               00000001
+Z                                 00000002
+_.org_0_0112                      00000112
+_.org_0_011C                      0000011C
+_.org_0_0125                      00000125
+_.org_0_015B                      0000015B
+_.org_0_0168                      00000168
+_.org_0_0173                      00000173
+_.org_0_01B7                      000001B7
+_.org_0_01BC                      000001BC
+_.org_0_0212                      00000212
+_.org_0_0224                      00000224
+_BOR21V                           00003EFF
+_BOR40V                           00003FFF
+_BOR4V_BOR21V                     00003EFF
+_BOR4V_BOR40V                     00003FFF
+_BOREN_NSLEEP                     00003EFF
+_BOREN_OFF                        00003CFF
+_BOREN_ON                         00003FFF
+_BOREN_SBODEN                     00003DFF
+_BOR_NSLEEP                       00003EFF
+_BOR_OFF                          00003CFF
+_BOR_ON                           00003FFF
+_BOR_SBODEN                       00003DFF
+_CONFIG1                          00002007
+_CONFIG2                          00002008
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003F7F
+_CP_OFF                           00003FFF
+_CP_ON                            00003FBF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         00001FFF
+_DEVID1                           00002006
+_EC_OSC                           00003FFB
+_EXTRC                            00003FFF
+_EXTRCIO                          00003FFE
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_FCMEN_OFF                        000037FF
+_FCMEN_ON                         00003FFF
+_FOSC_EC                          00003FFB
+_FOSC_EXTRC_CLKOUT                00003FFF
+_FOSC_EXTRC_NOCLKOUT              00003FFE
+_FOSC_HS                          00003FFA
+_FOSC_INTRC_CLKOUT                00003FFD
+_FOSC_INTRC_NOCLKOUT              00003FFC
+_FOSC_LP                          00003FF8
+_FOSC_XT                          00003FF9
+MPASM 5.65                   TEMPO_FINAL.ASM   4-25-2017  22:05:39         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_HS_OSC                           00003FFA
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_IESO_OFF                         00003BFF
+_IESO_ON                          00003FFF
+_INTOSC                           00003FFD
+_INTOSCIO                         00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_LVP_OFF                          00002FFF
+_LVP_ON                           00003FFF
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDTE_OFF                         00003FF7
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FF9
+__16F887                          00000001
+
+Errors   :     0
+Warnings :    14 reported,     0 suppressed
+Messages :    53 reported,     0 suppressed
+
+

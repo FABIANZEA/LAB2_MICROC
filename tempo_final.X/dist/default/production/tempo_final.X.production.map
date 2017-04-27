@@ -1,0 +1,161 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Apr 25 22:05:41 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x0004b0
+                   .cinit    romdata   0x000258    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/TEMPO_F       code   0x002007    program   0x000002
+.config_2008_BUILD/DEFAULT/PRODUCTION/TEMPO_F       code   0x002008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000259      
+                            0x002007    0x002008      
+            604 out of 8455 program addresses used, program memory utilization is 7%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      AAA   0x0000e3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                      BBB   0x000135    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                 BCD_BAJO   0x00017f    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR1.INC
+                BCD_BAJO1   0x000191    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR2.INC
+                BCD_BAJO2   0x0001a3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR3.INC
+                     BIT1   0x0001d7    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                   BITEN1   0x000204    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                  CAMBIAR   0x0001f6    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+            CONFIGURACION   0x0000c9    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONFIGURACION.INC
+              CONTADORDEC   0x0000e1    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+              CONTADORINC   0x000129    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+               CONVERSOR1   0x00017a    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR1.INC
+               CONVERSOR2   0x00018c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR2.INC
+               CONVERSOR3   0x00019e    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR3.INC
+                   ESPERA   0x000245    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ESPERA.INC
+                     HORA   0x0000ff    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                    HORA1   0x000150    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                   INICIO   0x000000    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\tempo_final.asm
+                 INIG_REG   0x0001b0    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\INIG_REG.INC
+                   LLAMAR   0x000249    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ESPERA.INC
+                 MENSAJE1   0x0001fe    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE2   0x000201    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE4   0x000209    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE5   0x00020c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                MENSAJE_1   0x000014    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_1.INC
+                MENSAJE_2   0x000037    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_2.INC
+                MENSAJE_3   0x00005a    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_3.INC
+                MENSAJE_4   0x00007d    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_4.INC
+                MENSAJE_5   0x00009f    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_5.INC
+                  MINUTOS   0x0000f3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                 MINUTOS1   0x000144    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                     NEXT   0x00020e    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                   PUBLIC   0x00023c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\PUBLIC.INC
+                 RETARDO1   0x0001b9    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\RETARDO1.INC
+                    ROTAR   0x0001f7    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+           ROTAR_CARACTER   0x00022e    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR_CARACTER.INC
+            SALIDA_VISUAL   0x000217    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\SALIDA_VISUAL.INC
+                    SALIR   0x000179    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                 SEGUNDOS   0x0000e6    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                SEGUNDOS1   0x000137    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                    START   0x000002    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\tempo_final.asm
+                SUMA_DIEZ   0x000186    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR1.INC
+               SUMA_DIEZ1   0x000198    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR2.INC
+               SUMA_DIEZ2   0x0001aa    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR3.INC
+                    TABLA   0x000009    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\TABLA.INC
+              TABLAESPERA   0x0000c2    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\TABLAESPERA.INC
+                 TERMINAR   0x000257    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ESPERA.INC
+                 TIEMPO_1   0x0001c4    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_2   0x0001cd    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_3   0x0001d9    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_4   0x0001e3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_5   0x0001ed    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                T_ESCOGER   0x0001be    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                   VOLVER   0x00023d    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\PUBLIC.INC
+             _.org_0_0112   0x000112    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+             _.org_0_011C   0x00011c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+             _.org_0_0125   0x000125    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+             _.org_0_015B   0x00015b    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+             _.org_0_0168   0x000168    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+             _.org_0_0173   0x000173    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+             _.org_0_01B7   0x0001b7    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\INIG_REG.INC
+             _.org_0_01BC   0x0001bc    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\RETARDO1.INC
+             _.org_0_0212   0x000212    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+             _.org_0_0224   0x000224    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\SALIDA_VISUAL.INC
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   INICIO   0x000000    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\tempo_final.asm
+                    START   0x000002    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\tempo_final.asm
+                    TABLA   0x000009    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\TABLA.INC
+                MENSAJE_1   0x000014    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_1.INC
+                MENSAJE_2   0x000037    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_2.INC
+                MENSAJE_3   0x00005a    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_3.INC
+                MENSAJE_4   0x00007d    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_4.INC
+                MENSAJE_5   0x00009f    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\MENSAJE_5.INC
+              TABLAESPERA   0x0000c2    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\TABLAESPERA.INC
+            CONFIGURACION   0x0000c9    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONFIGURACION.INC
+              CONTADORDEC   0x0000e1    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                      AAA   0x0000e3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                 SEGUNDOS   0x0000e6    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                  MINUTOS   0x0000f3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+                     HORA   0x0000ff    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+             _.org_0_0112   0x000112    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+             _.org_0_011C   0x00011c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+             _.org_0_0125   0x000125    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORDEC.INC
+              CONTADORINC   0x000129    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                      BBB   0x000135    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                SEGUNDOS1   0x000137    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                 MINUTOS1   0x000144    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                    HORA1   0x000150    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+             _.org_0_015B   0x00015b    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+             _.org_0_0168   0x000168    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+             _.org_0_0173   0x000173    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+                    SALIR   0x000179    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONTADORINC.INC
+               CONVERSOR1   0x00017a    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR1.INC
+                 BCD_BAJO   0x00017f    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR1.INC
+                SUMA_DIEZ   0x000186    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR1.INC
+               CONVERSOR2   0x00018c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR2.INC
+                BCD_BAJO1   0x000191    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR2.INC
+               SUMA_DIEZ1   0x000198    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR2.INC
+               CONVERSOR3   0x00019e    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR3.INC
+                BCD_BAJO2   0x0001a3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR3.INC
+               SUMA_DIEZ2   0x0001aa    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\CONVERSOR3.INC
+                 INIG_REG   0x0001b0    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\INIG_REG.INC
+             _.org_0_01B7   0x0001b7    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\INIG_REG.INC
+                 RETARDO1   0x0001b9    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\RETARDO1.INC
+             _.org_0_01BC   0x0001bc    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\RETARDO1.INC
+                T_ESCOGER   0x0001be    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_1   0x0001c4    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_2   0x0001cd    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                     BIT1   0x0001d7    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_3   0x0001d9    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_4   0x0001e3    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                 TIEMPO_5   0x0001ed    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                  CAMBIAR   0x0001f6    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\T_ESCOGER.INC
+                    ROTAR   0x0001f7    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE1   0x0001fe    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE2   0x000201    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                   BITEN1   0x000204    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE4   0x000209    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                 MENSAJE5   0x00020c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+                     NEXT   0x00020e    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+             _.org_0_0212   0x000212    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR.INC
+            SALIDA_VISUAL   0x000217    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\SALIDA_VISUAL.INC
+             _.org_0_0224   0x000224    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\SALIDA_VISUAL.INC
+           ROTAR_CARACTER   0x00022e    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ROTAR_CARACTER.INC
+                   PUBLIC   0x00023c    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\PUBLIC.INC
+                   VOLVER   0x00023d    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\PUBLIC.INC
+                   ESPERA   0x000245    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ESPERA.INC
+                   LLAMAR   0x000249    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ESPERA.INC
+                 TERMINAR   0x000257    program     static D:\MICROC\LAB2\temporizador_completo\tempo_final.X\ESPERA.INC
+
+
